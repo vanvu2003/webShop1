@@ -23,7 +23,6 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import poly.vanvu.filter.JwtAuthentionFilter;
 import poly.vanvu.service.UserService;
 
 @Configuration
@@ -34,8 +33,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Autowired
 	CustomAuthenticationSuccessHandler authenticationSuccessHandler;
 	
-	@Autowired
-	private JwtAuthentionFilter jwtAuthentionFilter;
+//	@Autowired
+//	private JwtAuthentionFilter jwtAuthentionFilter;
 	
 	@Autowired
 	private AuthenticationProvider authenticationProvider;

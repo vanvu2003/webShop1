@@ -15,4 +15,6 @@ public class OrderDto {
 	private String province;
 	private String district;
 	private String ward;
+	private int vourcherId;
+	private Double totalPrice;
 }

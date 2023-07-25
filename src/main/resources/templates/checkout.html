@@ -212,10 +212,14 @@
                             Total</span></h5>
                     <form action="">
                         <div class="input-group mb-3">
-                            <select class="form-select">
-                                <option selected>Coupon Code</option>
-                                <option th:each="vourcher : ${listVoucher}" th:value="${vourcher.id}"
-                                    th:text="${vourcher.nameVourcher}">One</option>
+                            <select class="form-select" onchange="changeVourcher()" id="vourcher">
+                                <option selected value="0">Coupon Code</option>
+                                <option th:each="vourcher : ${listVoucher}" th:value="${vourcher.vourcherValue}"
+                                    th:text="${vourcher.vourcherCode} +' giảm giá lên đến '+ ${#numbers.formatDecimal(vourcher.vourcherValue, 3,  'POINT', 0 , 'COMMA')+ ' VNĐ'}"
+                                    th:data-voucherid="${vourcher.id}">
+                                    One
+                                </option>
+
                             </select>
                             <!-- <input type="text" class="form-control border-0 p-4" placeholder="Coupon Code">
                             <div class="input-group-append">
@@ -236,19 +240,19 @@
                         <div class="border-bottom pt-3 pb-2">
                             <div class="d-flex justify-content-between mb-3">
                                 <h6>Subtotal</h6>
-                                <h6 th:text="${#numbers.formatDecimal(totalPrice, 3,  'POINT', 0 , 'COMMA')+ ' VNĐ'}">
+                                <h6 th:text="${totalPrice}" th:value="${totalPrice}" id="sub">
                                 </h6>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <h6 class="font-weight-medium">Shipping</h6>
-                                <h6 class="font-weight-medium">0</h6>
+                                <h6 class="font-weight-medium">Vourcher</h6>
+                                <h6 class="font-weight-medium" id="moneyVourcher">0</h6>
                             </div>
                         </div>
                         <div class="pt-2">
                             <div class="d-flex justify-content-between mt-3">
                                 <h5 style="color: red;">Total</h5>
                                 <h5 th:text="${#numbers.formatDecimal(totalPrice, 3,  'POINT', 0 , 'COMMA')+ ' VNĐ'}"
-                                    style="color: red;">$160</h5>
+                                    style="color: red;" id="total">$160</h5>
                             </div>
                         </div>
                     </div>
@@ -395,6 +399,17 @@
             var specificAddress = document.getElementById("specificAddress").value
             var note = document.getElementById("note").value
 
+
+            var totalPriceText = document.getElementById("total").textContent
+            var numericString = totalPriceText.replace(" VNĐ", "");
+            numericString = numericString.replace(/\./g, "");
+            var totalPrice = parseFloat(numericString);
+
+            var selectElement = document.getElementById('vourcher');
+            var selectedOption1 = selectElement.options[selectElement.selectedIndex];
+            var voucherId1 = parseInt(selectedOption1.dataset.voucherid);
+
+            console.log(totalPrice, voucherId1)
             $.ajax({
                 url: "/api/checkout",
                 type: "post",
@@ -406,7 +421,9 @@
                         fullname: fullname,
                         phone: phone,
                         specificAddress: specificAddress,
-                        note: note
+                        note: note,
+                        vourcherId: voucherId1,
+                        totalPrice: totalPrice
                     }
                 ),
                 contentType: 'application/json',
@@ -421,6 +438,25 @@
                     });
                 },
             })
+        }
+
+        function changeVourcher() {
+            var vourcherValue = parseFloat(document.getElementById("vourcher").value)
+
+            var subValue = document.getElementById("sub").textContent;
+            var subPrice = parseFloat(subValue.replace(/,/g, ''))
+
+            console.log(vourcherValue, subPrice)
+
+            var moneyVourcher = document.getElementById("moneyVourcher")
+            var total = document.getElementById("total")
+            var sub = document.getElementById("sub")
+
+            var totalPrice = subPrice - vourcherValue;
+            totalFormat = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+            console.log(totalPrice)
+            moneyVourcher.innerHTML = '<h6 class="font-weight-medium" id="moneyVourcher">' + vourcherValue + '</h6>'
+            total.innerHTML = '<h5 style="color: red;" id="total">' + totalFormat + ' VNĐ</h5>'
         }
     </script>
 </body>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import poly.vanvu.dto.OrderDto;
 import poly.vanvu.entity.Oder;
 import poly.vanvu.entity.User;
+import poly.vanvu.entity.Vourcher;
 import poly.vanvu.repository.OrderRepossitory;
 import poly.vanvu.service.OrderService;
 
@@ -29,9 +30,14 @@ public class OrderServiceImp implements OrderService {
 		oder.setCreateDate(new Date());
 		oder.setAddress(orderDto.getSpecificAddress()+", "+ orderDto.getWard() +", "+ orderDto.getDistrict()+", "+orderDto.getProvince());
 		oder.setNote(orderDto.getNote());
+		oder.setTotalPrice(orderDto.getTotalPrice());
+		
+		Vourcher vourcher = new Vourcher();
+		vourcher.setId(orderDto.getVourcherId());
 		
 		User user = (User) session.getAttribute("user");
 		
+		oder.setVourcher(vourcher);
 		oder.setUser(user);
 		oder.setStatus(0);
 		

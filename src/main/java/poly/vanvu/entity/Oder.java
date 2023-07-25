@@ -52,6 +52,9 @@ public class Oder implements Serializable {
 	@Column(name = "status", columnDefinition = "INTEGER")
 	private int status;
 	
+	@Column(name = "totalPrice", columnDefinition = "FLOAT")
+	private Double totalPrice;
+	
 	@OneToMany(mappedBy = "order")
 	@JsonIgnore
 	private List<OrderDetail> orderDetail;
