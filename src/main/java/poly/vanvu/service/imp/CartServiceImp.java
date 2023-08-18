@@ -27,6 +27,7 @@ public class CartServiceImp implements CartService{
 		
 		Product prod = productRepository.getById(productId); //tìm sản phẩm để lấy giá sale
 		User user = (User) session.getAttribute("user");
+
 		Cart cartByUserAndProdId = cartRepository.findByUserAndProdId(user.getUsername(), productId);
 		
 		if (cartByUserAndProdId == null) {

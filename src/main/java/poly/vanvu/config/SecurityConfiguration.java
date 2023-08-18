@@ -87,15 +87,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 //		.addFilterBefore(jwtAuthentionFilter, UsernamePasswordAuthenticationFilter.class);
 		
 		//Cấu hình đăng nhâp bằng OAuth2
-//		http
-//		.oauth2Login()
-//			.loginPage("/login")
-//			.defaultSuccessUrl("/oauth2/login/success")
-//			.authorizationEndpoint()
-//				.baseUri("/login/oauth2/authorization")
-//				.authorizationRequestRepository(getRepository())
-//			.and().tokenEndpoint()
-//				.accessTokenResponseClient(getToken());
+		http
+		.oauth2Login()
+			.loginPage("/login")
+			.defaultSuccessUrl("/oauth2/login/success")
+			.authorizationEndpoint()
+				.baseUri("/login/oauth2/authorization")
+				.authorizationRequestRepository(getRepository())
+			.and().tokenEndpoint()
+				.accessTokenResponseClient(getToken());
 	}
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {

@@ -95,12 +95,41 @@ public class UserServiceImp implements UserService{
 		String email = oauth2.getPrincipal().getAttribute("email");
 		String fullname = oauth2.getPrincipal().getAttribute("name");
 		String password = Long.toHexString(System.currentTimeMillis());
-		session.setAttribute("nameOauth2", fullname);
-		session.setAttribute("emailOauth2", email);
-		UserDetails user = org.springframework.security.core.userdetails.User.withUsername(email).password(passwordEncoder.encode(password)).roles("user").build();
-		Authentication auth = new UsernamePasswordAuthenticationToken(user,null,user.getAuthorities());
-		SecurityContextHolder.getContext().setAuthentication(auth);
 		
+		String provider = oauth2.getAuthorizedClientRegistrationId();
+		
+		User user = new User();
+		user.setFullname(fullname);
+		user.setCreateDate(new Date());
+		user.setPassword(password);
+		user.setRole("user");
+		
+		User userFindById = null;
+		if("google".equals(provider)) {
+			user.setUsername(email);
+			user.setEmail(email);
+			
+			userFindById = userRespository.findById(email).orElse(null);
+		}else if("facebook".equals(provider)) {
+			String id = oauth2.getPrincipal().getAttribute("id");
+			user.setUsername(id);
+			
+			userFindById = userRespository.findById(user.getUsername()).orElse(null);
+		}
+		if (userFindById == null) {
+			userRespository.save(user);
+		}
+		
+		session.setAttribute("user", user);
+		
+		UserDetails userDetail = org.springframework.security.core.userdetails.User
+				.withUsername(email)
+				.password(passwordEncoder
+				.encode(password))
+				.roles("user")
+				.build();
+		Authentication auth = new UsernamePasswordAuthenticationToken(userDetail,null,userDetail.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(auth);
 	}
 	
 	

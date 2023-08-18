@@ -9,8 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
-
+    <title>V&V Store</title>
+    <link rel="shortcut icon" href="/img/storeLogo.png" type="image/png">
     <!-- Custom fonts for this template-->
     <link href="/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -119,7 +119,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Quản lý khuyến mãi:</h6>
                         <a class="collapse-item" href="/admin/vourcher">Thêm khuyến mãi</a>
-                        <a class="collapse-item" href="">Danh sách khuyến mãi</a>
+                        <a class="collapse-item" href="/admin/listVourcher">Danh sách khuyến mãi</a>
                     </div>
                 </div>
             </li>
@@ -375,8 +375,9 @@
 
                                 <div class="col-3 pt-4 text-center">
                                     <div class="text-center border p-3 rounded">
-                                        <img id="preview" th:src="'/upload/'+ ${product.image}" width="200px"
-                                            height="220px">
+                                        <img id="preview"
+                                            th:src="${product.image != null} ? '/upload/' + ${product.image} : '/img/storeLogo.png'"
+                                            width="200px" height="220px">
                                     </div>
                                     <div class="pt-2">
                                         <input type="file" name="image" id="file" class="inputfile"

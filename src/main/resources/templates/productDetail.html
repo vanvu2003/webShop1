@@ -3,11 +3,11 @@
 
 <head>
     <meta charset="utf-8">
-    <title>MultiShop - Online Shop Website Template</title>
+    <title>V&V Store</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
-
+    <link rel="shortcut icon" href="/img/storeLogo.png" type="image/png">
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -596,7 +596,7 @@
                     if (response.status === 401) {
                         $.toast({
                             heading: 'Error',
-                            text: 'Vui lòng đăng nhập trước khi thêm!!',
+                            text: response.responseText,
                             showHideTransition: 'fade',
                             icon: 'error'
                         })

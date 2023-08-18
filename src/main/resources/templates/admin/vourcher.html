@@ -9,8 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
-
+    <title>V&V Store</title>
+    <link rel="shortcut icon" href="/img/storeLogo.png" type="image/png">
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -86,7 +86,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Quản lý khuyến mãi:</h6>
                         <a class="collapse-item" href="/admin/vourcher">Thêm khuyến mãi</a>
-                        <a class="collapse-item" href="">Danh sách khuyến mãi</a>
+                        <a class="collapse-item" href="/admin/listVourcher">Danh sách khuyến mãi</a>
                     </div>
                 </div>
             </li>
@@ -244,90 +244,74 @@
                     </div>
 
                     <div class="border rounded px-5 py-5">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <input type="text" ng-model="id" hidden>
-                                        <div class="form-group">
-                                            <label>Tên khuyến mãi:</label>
-                                            <input type="text" class="form-control" ng-model="nameVourcher"
-                                                placeholder="Chào mừng năm mới ...">
+                        <form method="post" th:object="${vourcher}">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="text" th:field="*{id}" hidden>
+                                            <div class="form-group">
+                                                <label>Tên khuyến mãi:</label>
+                                                <input type="text" class="form-control" th:field="*{nameVourcher}"
+                                                    placeholder="Chào mừng năm mới ..." required>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Mã khuyến mãi:</label>
+                                                <input type="text" class="form-control" th:field="*{vourcherCode}"
+                                                    placeholder="ABC" required>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label>Mã khuyến mãi:</label>
-                                            <input type="text" class="form-control" ng-model="vourcherCode"
-                                                placeholder="ABC">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Giá tối thiểu:</label>
+                                                <input type="text" class="form-control" th:field="*{minimumApply}"
+                                                    placeholder="5.000.000" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Giá trị khuyến mãi:</label>
+                                                <input type="text" class="form-control" th:field="*{vourcherValue}"
+                                                    placeholder="200.000" required>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label>Giá tối thiểu:</label>
-                                            <input type="text" class="form-control" ng-model="minimumPrice"
-                                                placeholder="5.000.000">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label>Giá trị khuyến mãi:</label>
-                                            <input type="text" class="form-control" ng-model="vourcherValue"
-                                                placeholder="200.000">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- <div class="row">
+                                    <div class="row">
                                         <div class="col-4">
                                             <div class="form-group">
-                                                <label>Bộ nhớ:</label>
-                                                <input type="text" class="form-control">
+                                                <label>Số lượng:</label>
+                                                <input type="number" class="form-control" th:field="*{quantity}"
+                                                    placeholder="0" required>
                                             </div>
                                         </div>
-                                    </div> -->
-                                <div class="row">
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label>Số lượng:</label>
-                                            <input type="number" class="form-control" ng-model="quantity"
-                                                placeholder="0">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Ngày bắt đầu:</label>
+                                                <input type="date" class="form-control" th:field="*{createDate}"
+                                                    required>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label>Ngày bắt đầu:</label>
-                                            <input type="date" class="form-control" ng-model="startDate">
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label>Ngày kết thúc:</label>
-                                            <input type="date" class="form-control" ng-model="endDate">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Ngày kết thúc:</label>
+                                                <input type="date" class="form-control" th:field="*{expirationDate}"
+                                                    required>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label>Mô tả:</label>
-                                                <textarea name="" id="" cols="80" rows="5" class="form-control"
-                                                    placeholder="Mô tả về sản phẩm"></textarea>
-                                            </div>
-                                        </div>
-                                    </div> -->
                             </div>
-
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-12">
-                                <button class="btn btn-success" style="width: 100px;" ng-click="save()">Lưu</button>
+                            <br>
+                            <div class="row">
+                                <div class="col-12">
+                                    <button class="btn btn-success" style="width: 100px;" onclick="save()">Lưu</button>
+                                </div>
                             </div>
-
-                        </div>
-
+                        </form>
                     </div>
 
                 </div>
@@ -402,6 +386,46 @@
         integrity="sha512-CwEY0URPo9ZtMMCpiW/mUx4iW2AseRWTbCEJZNoVr18gbFVIGmwztqu50C0LWwUYpA7PRgBXWard2HO4uwZDfA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+        function save() {
+            var id = $('input[name="id"]').val();
+            var nameVourcher = $('input[name="nameVourcher"]').val();
+            var vourcherCode = $('input[name="vourcherCode"]').val();
+            var minimumApply = $('input[name="minimumApply"]').val();
+            var vourcherValue = $('input[name="vourcherValue"]').val();
+            var quantity = $('input[name="quantity"]').val();
+            var createDate = $('input[name="createDate"]').val();
+            var expirationDate = $('input[name="expirationDate"]').val();
+
+
+            var vourcher = {
+                id: id,
+                nameVourcher: nameVourcher,
+                vourcherCode: vourcherCode,
+                minimumApply: minimumApply,
+                vourcherValue: vourcherValue,
+                quantity: quantity,
+                createDate: createDate,
+                expirationDate: expirationDate
+            }
+            $.ajax({
+                url: "/api/vourcher",
+                type: "POST",
+                data: JSON.stringify(vourcher),
+                contentType: "application/json",
+                success: function (response) {
+                    Swal.fire(
+                        'Thành công!',
+                        response,
+                        'success'
+                    ).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/admin/vourcher"
+                        }
+                    })
+                }
+
+            })
+        }
         var app = angular.module('vourcherApp', [])
 
         app.controller('vourcherController', function ($scope, $http) {
@@ -409,15 +433,15 @@
             $scope.save = function () {
                 var vourcherDto = {
                     id: $scope.id,
-                    nameVourcher: $scope.nameVourcher,
-                    vourcherCode: $scope.vourcherCode,
-                    minimumApply: $scope.minimumPrice,
-                    vourcherValue: $scope.vourcherValue,
-                    createDate: $scope.startDate,
-                    quantity: $scope.quantity,
-                    expirationDate: $scope.endDate
+                    nameVourcher: $scope.vourcher.nameVourcher,
+                    vourcherCode: $scope.vourcher.vourcherCode,
+                    minimumApply: $scope.vourcher.minimumPrice,
+                    vourcherValue: $scope.vourcher.vourcherValue,
+                    createDate: $scope.vourcher.startDate,
+                    quantity: $scope.vourcher.quantity,
+                    expirationDate: $scope.vourcher.endDate
                 }
-                console.log(vourcherDto)
+
                 $http.post('/api/vourcher', vourcherDto)
                     .then(function (response) {
                         $.toast({
@@ -440,13 +464,13 @@
             }
             $scope.clear = function () {
                 $scope.id = "",
-                    $scope.nameVourcher = "",
-                    $scope.vourcherCode = "",
-                    $scope.minimumPrice = "",
-                    $scope.vourcherValue = "",
-                    $scope.startDate = "",
-                    $scope.quantity = "",
-                    $scope.endDate = ""
+                    $scope.vourcher.nameVourcher = "",
+                    $scope.vourcher.vourcherCode = "",
+                    $scope.vourcher.minimumPrice = "",
+                    $scope.vourcher.vourcherValue = "",
+                    $scope.vourcher.startDate = "",
+                    $scope.vourcher.quantity = "",
+                    $scope.vourcher.endDate = ""
             }
         })
     </script>

@@ -25,4 +25,10 @@ public class VourcherServiceImp implements VourcherSevice{
 		return vourcher;
 	}
 
+	@Override
+	public void delete(int id) {
+		Vourcher vourcher = vourcherRepository.findById(id).orElse(null);
+		vourcherRepository.delete(vourcher);
+	}
+
 }

@@ -11,21 +11,24 @@
 
     <title>V&V Store</title>
     <link rel="shortcut icon" href="/img/storeLogo.png" type="image/png">
-    <!-- Custom fonts for this template -->
-    <link href="/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="/admin/css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.0/jquery.toast.min.css"
+        integrity="sha512-wJgJNTBBkLit7ymC6vvzM1EcSWeM9mmOu+1USHaRBbHkm6W9EgM0HY27+UtUaprntaYQJF75rc8gjxllKs5OIQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Custom styles for this page -->
-    <link href="/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
 </head>
 
-<body id="page-top">
+<body id="page-top" ng-app="vourcherApp" ng-controller="vourcherController">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -43,13 +46,6 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <!-- <li class="nav-item active">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li> -->
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -91,10 +87,11 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Quản lý khuyến mãi:</h6>
                         <a class="collapse-item" href="/admin/vourcher">Thêm khuyến mãi</a>
-                        <a class="collapse-item" href="/admin/listVourcher">Danh sách khuyến mãi</a>
+                        <a class="collapse-item" href="">Danh sách khuyến mãi</a>
                     </div>
                 </div>
             </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -132,13 +129,6 @@
                     <span>Thống kê</span></a>
             </li>
 
-            <!-- Nav Item - Tables -->
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li> -->
-
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -148,6 +138,14 @@
             </div>
 
             <!-- Sidebar Message -->
+            <!-- <div class="sidebar-card d-none d-lg-flex">
+                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
+                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components,
+                    and more!</p>
+                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to
+                    Pro!</a>
+            </div> -->
+
         </ul>
         <!-- End of Sidebar -->
 
@@ -161,14 +159,12 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
-                    <form class="form-inline">
-                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                            <i class="fa fa-bars"></i>
-                        </button>
-                    </form>
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
 
                     <!-- Topbar Search -->
-                    <!-- <form
+                    <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
@@ -179,7 +175,7 @@
                                 </button>
                             </div>
                         </div>
-                    </form> -->
+                    </form>
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -242,52 +238,57 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Danh sách hóa đơn</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive text-center">
-                                <table class="table table-bordered" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Mã hóa đơn</th>
-                                            <th scope="col">Người đặt hàng</th>
-                                            <th scope="col">Ngày đặt</th>
-                                            <th scope="col">Địa chỉ</th>
-                                            <th scope="col">Trạng thái</th>
-                                            <th scope="col">Xác nhận</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tbody">
-                                        <th:block th:id="${item.id}" th:each="item : ${listOrderWaitting}">
-                                            <tr>
-                                                <td th:text="${'#'+ item.id}">Lael Greer</td>
-                                                <td th:text="${item.fullname}">Systems Administrator</td>
-                                                <td th:text="${item.createDate}">London</td>
-                                                <td th:text="${item.address}">21</td>
-                                                <td th:if="${item.status == 0}"
-                                                    style="color: orange;font-weight: bolder;">
-                                                    Chờ xác nhận</td>
-                                                <td class="text-center"><button class="btn btn-success"
-                                                        th:onclick="'updateStatus('+${item.id}+',1)'">Xác
-                                                        nhận</button>
-                                                    <button class="btn btn-warning mt-2"
-                                                        th:onclick="'updateStatus('+${item.id}+',2)'">Hủy đơn</button>
-                                                </td>
-                                            </tr>
-                                        </th:block>
 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Danh sách khuyến mãi</h1>
                     </div>
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>MÃ KHUYẾN MÃI</th>
+                                <th>TÊN KHUYẾN MÃI</th>
+                                <th>SỐ LƯỢNG</th>
+                                <th>GIÁ TỐI THIỂU</th>
+                                <th>TRỊ GIÁ</th>
+                                <th>NGÀY BẮT ĐẦU</th>
+                                <th>NGÀY KẾT THÚC</th>
+                                <th>TÙY CHỌN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="vourcher in listVoucher">
+                                <td>{{vourcher.vourcherCode}}</td>
+                                <td>{{vourcher.nameVourcher}}</td>
+                                <td>{{vourcher.quantity}}</td>
+                                <td>{{vourcher.minimumApply | number: 0 }}</td>
+                                <td>{{vourcher.vourcherValue | number: 0}}</td>
+                                <td>{{vourcher.createDate | date:'dd-MM-yyyy'}}</td>
+                                <td>{{vourcher.expirationDate | date:'dd-MM-yyyy'}}</td>
+                                <td>
+                                    <button class="btn btn-warning" ng-click="update(vourcher.id)">SỬA</button>
+                                    <button class="btn btn-danger" ng-click="delete(vourcher.id)">XÓA</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
                 </div>
                 <!-- /.container-fluid -->
 
             </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <!-- <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2021</span>
+                    </div>
+                </div>
+            </footer> -->
+            <!-- End of Footer -->
 
         </div>
         <!-- End of Content Wrapper -->
@@ -321,7 +322,8 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
     <script src="/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
@@ -331,59 +333,68 @@
     <script src="/admin/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="/admin/vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="/admin/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="/admin/js/demo/datatables-demo.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    <script src="/admin/js/demo/chart-area-demo.js"></script>
+    <script src="/admin/js/demo/chart-pie-demo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.0/jquery.toast.min.js"
+        integrity="sha512-zv5L1hY+PMayrX2l0ojsUqem6AHpdSIVyDJBlDQH/fMLpH1JgaxPTjpum1b1AlLHdARVonrpomps+GgR0oN3MA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.0/jquery.toast.js"
+        integrity="sha512-CwEY0URPo9ZtMMCpiW/mUx4iW2AseRWTbCEJZNoVr18gbFVIGmwztqu50C0LWwUYpA7PRgBXWard2HO4uwZDfA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        function updateStatus(id, status) {
-            $.ajax({
-                url: "/api/updateOrder",
-                type: "POST",
-                data: { id: id, status: status },
-                success: function (response) {
-                    Swal.fire(
-                        'Thành công!',
-                        response,
-                        'success'
-                    ).then(function () {
-                        window.location.href = "/admin/confirmOrder";
+        var app = angular.module('vourcherApp', [])
+
+        app.controller('vourcherController', function ($scope, $http, $location, $window) {
+            $http.get('/api/listVourcher')
+                .then(function (response) {
+                    console.log(response.data)
+                    $scope.listVoucher = response.data
+                })
+
+            $scope.update = function (idVourcher) {
+                var id = idVourcher;
+                $http.get('/api/findVourcher?id=' + id)
+                    .then(function (response) {
+                        $scope.vourcher = {
+                            id: response.data.id,
+                            nameVourcher: response.data.nameVourcher,
+                            vourcherCode: response.data.vourcherCode,
+                            minimumPrice: response.data.minimumApply,
+                            vourcherValue: response.data.vourcherValue,
+                            startDate: response.data.createDate,
+                            quantity: response.data.quantity,
+                            endDate: response.data.expirationDate
+                        };
+                        console.log($scope.vourcher);
+                        $window.location.href = '/admin/vourcher';
                     });
-                }
-            })
+            };
+
+            $scope.delete = function (idVourcher) {
+                var id = idVourcher;
+                $http.delete('/api/vourcher?id=' + id)
+                    .then(function (response) {
+                        $.toast({
+                            heading: 'Thành công',
+                            text: "Đã xóa thành công",
+                            showHideTransition: 'slide',
+                            icon: 'success'
+                        })
+                        $http.get('/api/listVourcher')
+                            .then(function (response) {
+                                console.log(response.data)
+                                $scope.listVoucher = response.data
+                            })
+                    })
+            }
         }
 
-        function fillOrder() {
-            $.ajax({
-                url: "/api/fillOrder",
-                type: "GET",
-                success: function (response) {
-                    var htmlCode;
-                    response.forEach(function (order) {
-                        console.log(order)
-                        htmlCode +=
-                            '<tr>' +
-                            '<td>#' + order.id + '</td>' +
-                            '<td>' + order.fullname + '</td>' +
-                            '<td>' + order.createDate + '</td>' +
-                            '<td>' + order.address + '</td>' +
-                            '<td style="color: red; font-weight: bolder;">Chờ xác nhận</td>' +
-                            '<td><button class="btn btn-success" onclick="updateStatus(' + order.id + ')">Xác nhận</button></td>' +
-                            '</tr>';
-                        console.log(htmlCode)
-
-                    });
-                    if (response.length > 0) {
-                        $('#tbody').html(htmlCode)
-                    } else {
-                        $('#tbody').html('')
-                    }
-
-
-                }
-            })
-        }
+        )
 
     </script>
 </body>

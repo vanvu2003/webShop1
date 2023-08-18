@@ -35,7 +35,6 @@ public class CartApi {
 			Cart cart = cartServiceImp.setCart(productId, quantity);
 			
 			cartRepository.save(cart);
-		     
 		    return ResponseEntity.ok("Sản phẩm đã được thêm vào giỏ hàng");
 		}  catch (NullPointerException e) {
 	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Vui lòng đăng nhập trước khi thêm!!");
